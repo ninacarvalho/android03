@@ -1,77 +1,82 @@
 package com.marinacarvalho.quiz03;
 
 public class TaxCalculation {
-    // Constants for tax brackets and rates (2024 Ontario + Federal Combined Rates)
-    private final double[][] TAX_BRACKETS = {
-            {0, 49020, 0.150},    // 15% on first $49,020
-            {49020, 98040, 0.205}, // 20.5% on next $49,020
-            {98040, 151978, 0.26}, // 26% on next $53,938
-            {151978, 216511, 0.29}, // 29% on next $64,533
-            {216511, Double.MAX_VALUE, 0.33} // 33% on anything above $216,511
-    };
 
-    private final double RRSP_LIMIT_PERCENTAGE = 0.18; // 18% of annual income
-    private final double MAX_RRSP_LIMIT = 27230; // Maximum RRSP deduction limit for 2024
+    private double taxAmount;
+    private double rrspContributionLimit;
+    private double earnedIncome = 120000;
 
-    // User's income and RRSP contribution for calculations
-    private double annualIncome;
-    private double rrspContribution;
+    private double otherIncome;
+    private double capitalGain;
 
-    // Constructor
-    public TaxCalculation(double annualIncome, double rrspContribution) {
-        this.annualIncome = annualIncome;
-        this.rrspContribution = rrspContribution;
+    private double rrspMultiplier;
+    private double taxRate;     // Simplified flat tax rate (for demonstration)
+
+    private double sliderValue;
+
+    public TaxCalculation(double otherIncome, double capitalGain, double rrspMultiplier) {
+        this.otherIncome = otherIncome;
+        this.capitalGain = capitalGain;
+        this.rrspMultiplier = rrspMultiplier;
     }
 
-    // Method to calculate combined federal and provincial taxes
-    public double calculateTax() {
-        double taxableIncome = annualIncome - rrspContribution;
-        double tax = 0.0;
+    public TaxCalculation () {
 
-        for (double[] bracket : TAX_BRACKETS) {
-            double lower = bracket[0];
-            double upper = bracket[1];
-            double rate = bracket[2];
+    }
 
-            if (taxableIncome > lower) {
-                double incomeInBracket = Math.min(upper - lower, taxableIncome - lower);
-                tax += incomeInBracket * rate;
-            } else {
-                break;
-            }
+    //Calculate RRSP contribution limit (18% of earned income, capped at $27,230).
+    private double calculateRRSPContributionLimit(double income) {
+        double calculatedLimit = income * 0.18;
+        return Math.min(calculatedLimit, 27230);
+    }
+
+    /***/
+    public void adjustSlider(double sliderValue) {
+        if (sliderValue < 0 || sliderValue > rrspContributionLimit) {
+            throw new IllegalArgumentException("Slider value must be between 0 and the RRSP limit: " + rrspContributionLimit);
         }
-        return tax;
+
+        this.sliderValue = sliderValue;
+        double taxableIncome = earnedIncome - sliderValue; // Deduct RRSP contribution from income
+        double tax = taxableIncome * taxRate; // Simplified tax calculation
+
+        // Display the results
+        System.out.printf("RRSP Contribution: $%.2f\n", sliderValue);
+        System.out.printf("Taxable Income: $%.2f\n", taxableIncome);
+        System.out.printf("Tax Owed: $%.2f\n", tax);
     }
 
-    // Method to calculate RRSP limit
-    public double calculateRRSPDeductionLimit() {
-        double limit = Math.min(annualIncome * RRSP_LIMIT_PERCENTAGE, MAX_RRSP_LIMIT);
-        return limit;
+    /**
+     * Get the current RRSP contribution limit.
+     */
+    public double getRRSPContributionLimit() {
+        return rrspContributionLimit;
     }
 
-    // What-if analysis for RRSP contributions
-    public double calculateTaxWithRRSP(double newRrspContribution) {
-        if (newRrspContribution > calculateRRSPDeductionLimit()) {
-            newRrspContribution = calculateRRSPDeductionLimit(); // Cap at max limit
-        }
-        this.rrspContribution = newRrspContribution;
-        return calculateTax();
+    /***/
+
+    public double getOtherIncome() {
+        return otherIncome;
     }
 
-    // Getters and Setters
-    public double getAnnualIncome() {
-        return annualIncome;
+    public void setOtherIncome(double otherIncome) {
+        this.otherIncome = otherIncome;
     }
 
-    public void setAnnualIncome(double annualIncome) {
-        this.annualIncome = annualIncome;
+    public double getCapitalGain() {
+        return capitalGain;
     }
 
-    public double getRrspContribution() {
-        return rrspContribution;
+    public void setCapitalGain(double capitalGain) {
+        this.capitalGain = capitalGain;
     }
 
-    public void setRrspContribution(double rrspContribution) {
-        this.rrspContribution = rrspContribution;
+    public double getRrspMultiplier() {
+        return rrspMultiplier;
     }
+
+    public void setRrspMultiplier(double rrspMultiplier) {
+        this.rrspMultiplier = rrspMultiplier;
+    }
+
 }

@@ -24,12 +24,12 @@
         android:layout_marginBottom="26dp"
         android:layout_marginTop="26dp"/>
 
-    <!-- Input Field: Taxable Income -->
+    <!-- Input Field: Other Income -->
     <TextView
-        android:id="@+id/taxable_income_label"
+        android:id="@+id/other_income_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Taxable Income (in CAD):"
+        android:text="Other Income (in CAD):"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/header_title"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,13 +37,13 @@
         android:layout_marginBottom="8dp" />
 
     <EditText
-        android:id="@+id/taxable_income_input"
+        android:id="@+id/other_income_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:hint="Enter your taxable income"
+        android:hint="Enter your other income"
         android:backgroundTint="#FF5722"
-        app:layout_constraintTop_toBottomOf="@id/taxable_income_label"
+        app:layout_constraintTop_toBottomOf="@id/other_income_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp" />
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="RRSP Deduction (Multiplier):"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/taxable_income_input"
+        app:layout_constraintTop_toBottomOf="@id/other_income_input"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp" />
@@ -80,10 +80,10 @@
 
     <!-- TextView to Display Slider Value -->
     <TextView
-        android:id="@+id/slider_value"
+        android:id="@+id/tax_calculated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Value: 0"
+        android:text="Tax: $0.00"
         android:textSize="16sp"
         android:textColor="#000000"
         app:layout_constraintTop_toBottomOf="@id/rrsp_slider"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:text="Tax Amount (in CAD):"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/slider_value"
+        app:layout_constraintTop_toBottomOf="@id/tax_calculated"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp" />

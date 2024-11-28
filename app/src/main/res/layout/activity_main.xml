@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ontario Tax Calculator"
+        android:textSize="24sp"
+        android:textColor="#FF5722"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="26dp"
+        android:layout_marginTop="26dp"/>
+
+    <!-- Input Field: Taxable Income -->
+    <TextView
+        android:id="@+id/taxable_income_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Taxable Income (in CAD):"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/header_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/taxable_income_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Enter your taxable income"
+        android:backgroundTint="#FF5722"
+        app:layout_constraintTop_toBottomOf="@id/taxable_income_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Slider: RRSP Deduction -->
+    <TextView
+        android:id="@+id/rrsp_slider_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RRSP Deduction (Multiplier):"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/taxable_income_input"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Slider -->
+    <com.google.android.material.slider.Slider
+        android:id="@+id/rrsp_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="27.230"
+        android:value="20.0"
+
+        app:trackColor="#D3D3D3"
+        app:thumbColor="#FF5722"
+        app:thumbStrokeColor="#FF5722"
+
+        app:layout_constraintTop_toBottomOf="@id/rrsp_slider_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- TextView to Display Slider Value -->
+    <TextView
+        android:id="@+id/slider_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Value: 0"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/rrsp_slider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Display Field: Tax Amount -->
+    <TextView
+        android:id="@+id/tax_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tax Amount (in CAD):"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/slider_value"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tax_amount_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:padding="8dp"
+        android:text="0.00"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tax_amount_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Display Field: RRSP Contribution Limit -->
+    <TextView
+        android:id="@+id/rrsp_limit_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RRSP Contribution Limit (Next Year):"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tax_amount_value"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/rrsp_limit_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:padding="8dp"
+        android:text="0.00"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/rrsp_limit_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Button: Calculate Tax -->
+    <Button
+        android:id="@+id/calculate_tax_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculate Tax"
+        android:backgroundTint="#FF5722"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/rrsp_limit_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Button: Refresh Data -->
+    <Button
+        android:id="@+id/refresh_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Refresh Data"
+        android:backgroundTint="#FF5722"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/calculate_tax_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

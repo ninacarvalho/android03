@@ -1,4 +1,5 @@
 package com.marinacarvalho.quiz03;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView taxCalculated, taxAmountValue, rrspLimitValue;
     private Button calculateTaxButton, refreshButton;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +38,17 @@ public class MainActivity extends AppCompatActivity {
         Slider slider = findViewById(R.id.rrsp_slider);
         TextView taxCalculated = findViewById(R.id.tax_calculated);
 
+        refreshData();
+
+        // Instantiate SharedPreferences
+        sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+
         // Instantiate the TaxCalculator (example)
         taxCalculator = new TaxCalculator();
 
         // Set listeners
         calculateTaxButton.setOnClickListener(v -> calculateTax());
-        refreshButton.setOnClickListener(v -> refreshData());
+        refreshButton.setOnClickListener(v -> loadSavedData());
         setupSliderListener();
     }
 
@@ -71,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
         // Update the tax_amount_value TextView
         taxAmountValue.setText(String.format("$%.2f", taxOwed));
         rrspLimitValue.setText(String.format("$%.2f", contributionLimitNextYear));
+
+        // Save data to SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("otherIncome", otherIncome);
+        editor.putFloat("rrspDeduction", (float) rrspDeduction);
+        editor.putFloat("taxAmount", (float) taxOwed);
+        editor.putFloat("rrspContributionLimit", (float) contributionLimitNextYear);
+        editor.apply();
+
     }
 
     private void refreshData() {
@@ -81,4 +98,20 @@ public class MainActivity extends AppCompatActivity {
         taxAmountValue.setText("0.00");
         rrspLimitValue.setText("0.00");
     }
+
+
+    private void loadSavedData() {
+        // Retrieve saved data from SharedPreferences
+        String savedOtherIncome = sharedPreferences.getString("otherIncome", "");
+        float savedRrspDeduction = sharedPreferences.getFloat("rrspDeduction", 0f);
+        float savedTaxAmount = sharedPreferences.getFloat("taxAmount", 0f);
+        float savedRrspContributionLimit = sharedPreferences.getFloat("rrspContributionLimit", 0f);
+
+        // Set the retrieved values back to UI elements
+        otherIncomeInput.setText(savedOtherIncome);
+        rrspSlider.setValue(savedRrspDeduction);
+        taxAmountValue.setText(String.format("$%.2f", savedTaxAmount));
+        rrspLimitValue.setText(String.format("$%.2f", savedRrspContributionLimit));
+    }
 }
+
